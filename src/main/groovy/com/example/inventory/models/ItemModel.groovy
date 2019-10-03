@@ -1,7 +1,8 @@
 package com.example.inventory.models
 
+import org.hibernate.annotations.CreationTimestamp
+
 import javax.persistence.*
-import java.sql.Timestamp
 
 @Entity
 @Table(name = "item")
@@ -9,7 +10,7 @@ class ItemModel {
     private Long itemId
     private String itemName
     private String description
-    private Timestamp addedOn
+    private Date addedOn
     private InventoryModel inventoryByItemId
 
     @Id
@@ -43,13 +44,14 @@ class ItemModel {
         this.description = description
     }
 
-    @Basic
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "added_on", nullable = false)
-    Timestamp getAddedOn() {
+    Date getAddedOn() {
         return addedOn
     }
 
-    void setAddedOn(Timestamp addedOn) {
+    void setAddedOn(Date addedOn) {
         this.addedOn = addedOn
     }
 
