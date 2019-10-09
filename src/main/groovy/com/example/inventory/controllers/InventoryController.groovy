@@ -27,7 +27,12 @@ class InventoryController {
      */
     @GetMapping('/ping')
     @ResponseBody Map ping(){
-        return [success:true,time:new Date()]
+        return [success:true,time:new Date(),name:'Inventory']
+    }
+
+    @GetMapping('/add')
+    String addItemPage(){
+        'view'
     }
 
     /**
@@ -77,7 +82,7 @@ class InventoryController {
     @GetMapping('/list')
     String showAll(ModelMap modelMap){
         modelMap.addAttribute('itemList',itemService.fetchAll())
-        ''
+        'viewAll'
     }
 
     /**
@@ -89,7 +94,7 @@ class InventoryController {
     @GetMapping('/view/{id}')
     String viewItem(@PathVariable('id') Long itemId,ModelMap modelMap){
         modelMap.addAttribute('item',itemService.getItem(itemId))
-        ''
+        'view'
     }
 
     /**

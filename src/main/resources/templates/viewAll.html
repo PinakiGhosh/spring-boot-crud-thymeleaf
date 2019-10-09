@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/includes :: head"></head>
+<body>
+<nav th:replace="fragments/header :: nav"></nav>
+<main role="main" class="container">
+    <div class="row">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Item Id</th>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                    <th>Created On</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${itemList}">
+                    <td th:text="${item.itemId}"></td>
+                    <td th:text="${item.itemName}"></td>
+                    <td th:text="${item.description}"></td>
+                    <td th:text="${item.createdOn}"></td>
+                    <td><button class="btn">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
