@@ -20,6 +20,10 @@ class ItemService {
         itemRepository.save(itemModel)
     }
 
+    ItemModel getItem(String itemName){
+        itemRepository.findByItemName(itemName)
+    }
+
     ItemModel getItem(Long itemId){
         itemRepository.findById(itemId).orElseGet(null)
     }

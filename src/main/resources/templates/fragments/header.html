@@ -5,12 +5,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <!--<a class="nav-link" href="#">Add <span class="sr-only">(current)</span></a>-->
-                <a class="nav-link" href="#">Add</a>
+            <li class="nav-item">
+                <a class="nav-link" th:href=@{'/add'} id="add">Add</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Show All</a>
+                <a class="nav-link" th:href=@{'/list'} id="list">Show All</a>
             </li>
         </ul>
     </div>

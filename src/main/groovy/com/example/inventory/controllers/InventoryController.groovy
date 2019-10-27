@@ -42,20 +42,23 @@ class InventoryController {
      * @param modelMap
      * @return
      */
-    @PostMapping('/addItem')
-    String addItem(@RequestBody ItemModel itemModel,ModelMap modelMap){
+    @PostMapping('/add')
+    String addItem(@ModelAttribute ItemModel itemModel,ModelMap modelMap){
         String message
-        ItemModel savedModel = null
+        ItemModel savedModel
+        boolean success = false
         try {
             savedModel = itemService.save(itemModel)
             message = "${itemModel.itemName} saved with id ${savedModel.itemId}"
+            modelMap.addAttribute('itemModel',savedModel)
+            success = true
         }catch (ItemExistsException iee){
             message = iee.message
+            modelMap.addAttribute('itemModel',itemService.getItem(itemModel.itemName))
         }
-        modelMap.addAttribute('item',savedModel)
-        modelMap.addAttribute('success',savedModel as Boolean)
         modelMap.addAttribute('message',message)
-        ''
+        modelMap.addAttribute('success',success)
+        'view'
     }
 
     /**
@@ -64,11 +67,11 @@ class InventoryController {
      * @param itemId
      * @return
      */
-    @DeleteMapping('/deleteItem')
-    @ResponseBody deleteItem(@RequestParam('id') Long itemId){
+    @DeleteMapping('/deleteItem/{itemId}')
+    String deleteItem(@PathVariable('itemId') Long itemId){
         if(itemService.getItem(itemId)){
             itemService.deleteItem(itemId)
-            return true
+            'viewAll'
         }else{
             new ResponseStatusException(HttpStatus.NOT_FOUND)
         }
@@ -93,7 +96,7 @@ class InventoryController {
      */
     @GetMapping('/view/{id}')
     String viewItem(@PathVariable('id') Long itemId,ModelMap modelMap){
-        modelMap.addAttribute('item',itemService.getItem(itemId))
+        modelMap.addAttribute('itemModel',itemService.getItem(itemId))
         'view'
     }
 

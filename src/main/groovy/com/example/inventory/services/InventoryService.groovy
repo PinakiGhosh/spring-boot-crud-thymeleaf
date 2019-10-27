@@ -13,7 +13,8 @@ class InventoryService {
     InventoryRepository inventoryRepository
 
     InventoryModel addToInventory(Long itemId,int count){
-        InventoryModel inventoryModel = inventoryRepository.findById(itemId).orElseGet(null)
+        Optional<InventoryModel> inventoryModelOptional = inventoryRepository.findById(itemId)
+        InventoryModel inventoryModel = inventoryModelOptional.isPresent() ? inventoryModelOptional.get() : null
         if(inventoryModel){
             inventoryModel.count+=count
         }else{
@@ -25,7 +26,8 @@ class InventoryService {
     }
 
     InventoryModel deleteFromInventory(Long itemId,int count){
-        InventoryModel inventoryModel = inventoryRepository.findById(itemId).orElseGet(null)
+        Optional<InventoryModel> inventoryModelOptional = inventoryRepository.findById(itemId)
+        InventoryModel inventoryModel = inventoryModelOptional.isPresent() ? inventoryModelOptional.get() : null
         if(inventoryModel && inventoryModel.count > count){
             inventoryModel.count-=count
             inventoryRepository.save(inventoryModel)
